@@ -1,11 +1,11 @@
 bool cover(Line L, Line P, Line Q) {
-    // for double, i128 => Real
+    // return PtSide(LineInter(P, Q), L) <= 0; for double
     i128 u = (Q.a - P.a) ^ Q.dir();
     i128 v = P.dir() ^ Q.dir();
     i128 x = P.dir().x * u + (P.a - L.a).x * v;
     i128 y = P.dir().y * u + (P.a - L.a).y * v;
     return sgn(x * L.dir().y - y * L.dir().x) * sgn(v) >= 0;
-}
+} /* SPLIT-HASH */
 vector<Line> HPI(vector<Line> P) {
     sort(all(P), [&](Line l, Line m) {
         if (argcmp(l.dir(), m.dir())) return true;

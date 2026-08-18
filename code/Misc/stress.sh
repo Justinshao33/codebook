@@ -1,23 +1,17 @@
-#!/usr/bin/env bash
-g++ $1.cpp -o $1
-g++ $2.cpp -o $2
-g++ $3.cpp -o $3
-for i in {1..100} ; do
-    ./$3 > input.txt
-    # st=$(date +%s%N)
-    ./$1 < input.txt > output1.txt
-    # echo "$((($(date +%s%N) - $st)/1000000))ms"
-    ./$2 < input.txt > output2.txt
-    if cmp --silent -- "output1.txt" "output2.txt" ; then
-        continue
-    fi
-    echo Input:
-    cat input.txt
-    echo Your Output:
-    cat output1.txt
-    echo Correct Output:
-    cat output2.txt
-    exit 1
+read sol1 sol2 gen
+for i in $(seq 1 9999); do
+  echo testcase $i
+  ./$gen > input
+  ./$sol1 < input > output1
+  ./$sol2 < input > output2
+  if !(diff output1 output2 > log)
+  then
+    echo input:
+    cat input
+    echo output1:
+    cat output1
+    echo output2:
+    cat output2
+    break
+  fi
 done
-echo OK!
-./stress.sh main good gen
